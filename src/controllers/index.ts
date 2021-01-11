@@ -4,7 +4,7 @@ import NewsListController from './NewsListController'
 const router = new Router()
 const newsListController = new NewsListController()
 
-const initController = function(app) {
+const initController = function (app) {
   router.get('/', newsListController.actionIndex)
 
   app.use(router.routes()).use(router.allowedMethods())

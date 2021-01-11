@@ -6,6 +6,7 @@ class NewsListController extends Controller {
   }
 
   actionIndex(ctx) {
+    throw new Error('list error')
     ctx.body = 'news list'
   }
 }
