@@ -1,5 +1,7 @@
+import Koa from 'koa'
+import { Logger } from 'log4js'
 class ErrorHandler {
-  static error(app, logger) {
+  static error(app: Koa, logger: Logger) {
     // 全局错误捕获
     app.use(async (ctx, next) => {
       try {

@@ -1,7 +1,23 @@
 {
   "compilerOptions": {
+    // 模块使用export=导出的时候，添加该参数可以使用默认导入
+    "esModuleInterop": true,
+    // 编译输出地址
     "outDir": "./build",
+    // 编译使用规范
     "target": "ES6",
-    "module": "commonjs"
+    // 模块规范
+    "module": "commonjs",
+    // 设置基础路径
+    "baseUrl": "./",
+    // 配置路径映射，配合module-alias创建的映射，否则ts不识别
+    "paths": {
+      "@interfaces/*": ["src/interfaces/*"]
+    },
+    // 允许使用装饰器
+    "experimentalDecorators": true,
+    // 不允许any和未定义this
+    "noImplicitAny": true,
+    "noImplicitThis": true,
   }
 }
