@@ -20,3 +20,5 @@ https://github.com/jeffijoe/awilix awilix-koa
 module-alias
 ### 查看占用端口进程  关闭指定进程
 ps -ef | grep nodemon lsof -i :port  kill -9 pid
+### esprima 转抽象语法树
+tsconfig.compilerOptions.target如果为es6，装饰器接收到的是类，如果去掉该参数，装饰器接收到的构造函数

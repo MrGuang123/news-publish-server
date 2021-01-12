@@ -7,7 +7,7 @@ interface ApiServiceInterface {
 }
 // const Next: () => Promise<unknown>;
 
-@route('/api')
+@route('/api/news')
 class ApiController {
   private apiService: IApi;
   constructor({ apiService }: ApiServiceInterface) {
@@ -16,7 +16,7 @@ class ApiController {
 
   @route('/list')
   @GET()
-  async newsList(ctx: Router.RouterContext, next: () => Promise<unknown>):Promise<any> {
+  async newsList(ctx: Router.RouterContext, next: () => Promise<unknown>): Promise<any> {
     const data = await this.apiService.getInfo()
     ctx.body = data
   }
