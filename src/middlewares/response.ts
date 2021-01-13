@@ -17,6 +17,7 @@ const responseUrlFiter = (reg: string) => {
   return async (ctx: Context, next: () => Promise<any>) => {
     const regexp = new RegExp(reg)
     await next()
+    console.log(ctx)
     if(regexp.test(ctx.originalUrl) && ctx.status === 200) {
       responseFormat(ctx)
     }
