@@ -18,6 +18,7 @@ class ApiController {
   @GET()
   async newsList(ctx: Router.RouterContext, next: () => Promise<unknown>): Promise<any> {
     const data = await this.apiService.getInfo()
+
     ctx.body = data
   }
 }

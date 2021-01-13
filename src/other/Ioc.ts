@@ -1,6 +1,7 @@
 import { parseScript } from 'esprima'
 import { Pattern } from 'estree'
 import CreateIoc from './createIoc'
+import 'reflect-metadata'
 
 const container = new CreateIoc()
 
@@ -54,9 +55,9 @@ function controllertest<T extends { new(...args: any[]): {} }>(constructor: T) {
       let indentify: string
       for (indentify of params) {
         if (hasKey(this, indentify)) {
-          this[indentify] = container.get(TYPES[indentify])
+          // this[indentify] = container.get(TYPES[indentify])
+          this[indentify] = Reflect.getMetadata(TYPES[indentify], constructor)
         }
-        // console.log(this[indentify].toString())
       }
     }
   }
@@ -64,16 +65,27 @@ function controllertest<T extends { new(...args: any[]): {} }>(constructor: T) {
   return Controller
 }
 
+function inject(serviceIndentify: Symbol): Function {
+  return (target: Function, targetKey: string, index: number) => {
+    console.log(target, targetKey, index)
+    // 只有构造函数没有targetKey，如果在info上面添加inject装饰器，targetKey为info
+    if(!targetKey) {
+      // 反射，在这里serviceIndentify为indexService，container.get(serviceIndentify)为indexService对应的实例，target为indexController
+      Reflect.defineMetadata(serviceIndentify, container.get(serviceIndentify),target)
+    }
+  }
+}
+
 @controllertest
 class IndexController {
   public indexService: IIndexService;
-  constructor(indexService?: IIndexService) {
+  constructor(@inject(TYPES.indexService) indexService?: IIndexService) {
     // 后面加! 表示肯定有值  不是undefined
     this.indexService = indexService!
   }
 
   info() {
-    this.indexService.log('test')
+    this.indexService.log('test🍑')
   }
 }
 

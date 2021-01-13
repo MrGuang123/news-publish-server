@@ -1,27 +1,35 @@
 import Koa from 'koa'
 import { Logger } from 'log4js'
-class ErrorHandler {
+import StatusConstance from '../assets/StatusConstance'
+class ErrorHandler{
+
   static error(app: Koa, logger: Logger) {
     // 全局错误捕获
     app.use(async (ctx, next) => {
       try {
         await next()
       } catch (err) {
-        logger.error(err.message)
+        console.log('error:' + err.code, err.message, err.status)
+        const code: number = ctx.code || 500
+        const statusChar = StatusConstance[code] || 'UNKNOWN'
+        logger.error(`状态码：${code} - ${statusChar} - 消息：${err.message}`)
         ctx.body = {
-          code: 500,
-          msg: err
+          code: code,
+          msg: `${statusChar} - ${err.message}`
         }
       }
     })
 
-    // 处理404
+    // 捕获非200错误
     app.use(async (ctx, next) => {
       await next()
-      if (ctx.status === 404) {
+      if(ctx.status !== 200) {
+        console.log(ctx.status)
+        const statusChar = StatusConstance[ctx.status] || 'UNKNOWN'
+        logger.error(`状态码：${ctx.status} - ${statusChar} - 消息：${ctx.request.url}`)
         ctx.body = {
-          code: 404,
-          msg: '页面不存在'
+          code: ctx.status,
+          msg: `${statusChar} - ${ctx.request.url}`
         }
       }
     })
