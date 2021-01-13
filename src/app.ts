@@ -7,8 +7,6 @@ import ErrorHandler from './middlewares/errorHandler'
 import responseFilter from './middlewares/response'
 import Logger from './middlewares/logger'
 import ControllerInit from './ControllerInit'
-import { createContainer, Lifetime } from 'awilix'
-import { scopePerRequest, loadControllers } from 'awilix-koa'
 
 const app = new Koa()
 
