@@ -10,6 +10,9 @@ ts-node-dev
 [log4js配置](https://blog.csdn.net/kingov/article/details/79787868)
 ### koa2 mariadb sequelize
 https://blog.csdn.net/lixinyi0622/article/details/84797573
+
+依赖sequelize  mariadb @types/node  @types/validator
+https://www.sequelize.com.cn/
 ### e2e 测试
 rize puppeteer  或者  cli默认
 ### 接口测试
