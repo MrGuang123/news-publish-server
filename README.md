@@ -25,3 +25,5 @@ module-alias
 ps -ef | grep nodemon lsof -i :port  kill -9 pid
 ### esprima 转抽象语法树
 tsconfig.compilerOptions.target如果为es6+，装饰器接收到的是类,小于es6，装饰器接收到的构造函数
+### 项目管理
+https://www.teambition.com/

@@ -5,7 +5,7 @@
     // 编译输出地址
     "outDir": "./build",
     // 编译使用规范，target如果为es6+，装饰器接收到的是类,小于es6，装饰器接收到的构造函数
-    "target": "es5",
+    "target": "es2017",
     // 模块规范
     "module": "commonjs",
     // 设置基础路径
