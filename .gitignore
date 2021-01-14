@@ -33,3 +33,4 @@ node_modules
 #Ignore dist folder
 dist
 build
+src/config/dbConfig.ts

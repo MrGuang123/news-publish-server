@@ -12,8 +12,8 @@ const app = new Koa()
 
 // 创建映射，并且需要在tsconfig中配置baseUrl和paths，否则ts报错
 addAliases({
-  '@': `${__dirname}/src`,
-  '@interfaces': `${__dirname}/src/interfaces`
+  '@utils': `${__dirname}/utils`,
+  '@interfaces': `${__dirname}/interfaces`
 })
 
 // 日志添加到ctx
