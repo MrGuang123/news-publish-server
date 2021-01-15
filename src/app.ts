@@ -1,6 +1,11 @@
 import Koa from 'koa'
 import KoaStatic from 'koa-static'
-import { addAliases } from 'module-alias'
+import bodyParser from 'koa-bodyparser'
+import helmet from 'koa-helmet'
+import cors from '@koa/cors'
+
+// 创建路径别名
+import './libs/PathAlias'
 
 import config from './config'
 import ErrorHandler from './middlewares/errorHandler'
@@ -10,11 +15,14 @@ import ControllerInit from './ControllerInit'
 
 const app = new Koa()
 
-// 创建映射，并且需要在tsconfig中配置baseUrl和paths，否则ts报错
-addAliases({
-  '@utils': `${__dirname}/utils`,
-  '@interfaces': `${__dirname}/interfaces`
-})
+// 处理请求参数
+app.use(bodyParser())
+
+// 提供重要的安全头部信息
+app.use(helmet())
+
+// 允许跨域
+app.use(cors())
 
 // 日志添加到ctx
 Logger.init(app)

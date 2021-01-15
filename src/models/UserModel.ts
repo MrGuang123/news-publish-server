@@ -1,16 +1,18 @@
 import { Model, DataTypes } from 'sequelize'
-import sequelize from '../libs/DbConnect'
-import { UserDataInterface } from '../interfaces/UserDataInterface'
+import sequelize from '@libs/DbConnect'
+import { UserDataInterface } from '@interfaces/UserDataInterface'
 import dateFormat from '@utils/dateFormat'
 
 class User extends Model implements UserDataInterface {
-  // null断言 ! 在严格模式是必须的
+  // null断言 ! 在严格模式是必须的, 表示肯定有值
   public id!: number
   public userName: string
   public password: string
   public telephone: string | null
-  public createdAt: Date
-  public updatedAt: Date
+  public roleIds: string
+  public token?: string
+  public createdAt?: Date
+  public updatedAt?: Date
 }
 
 User.init({
@@ -31,10 +33,18 @@ User.init({
     type: new DataTypes.STRING(11),
     allowNull: false
   },
+  roleIds: {
+    type: new DataTypes.STRING(255),
+    allowNull: false
+  },
+  token: {
+    type: new DataTypes.STRING(255),
+    allowNull: true
+  },
   createdAt: {
     type: new DataTypes.DATE,
     get() {
-      return new Date(this.getDataValue('createdAt')).toLocaleString()
+      return dateFormat(this.getDataValue('createdAt'))
     }
   },
   updatedAt: {
@@ -48,6 +58,6 @@ User.init({
   sequelize
 })
 
-console.log(User)
+// console.log(User)
 
 export default User

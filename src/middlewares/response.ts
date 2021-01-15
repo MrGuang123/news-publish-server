@@ -1,5 +1,5 @@
 import { Context } from 'koa'
-import StatusConstance from '../assets/StatusConstance'
+import StatusConstance from '@assets/StatusConstance'
 
 const responseFormat = (ctx: Context) => {
   const commonResponse = {

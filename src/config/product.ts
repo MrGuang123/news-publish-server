@@ -1,3 +1,4 @@
 export default {
-  port: '80'
+  port: '80',
+  secret: 'prodSecret'
 }

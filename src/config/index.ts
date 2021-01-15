@@ -1,6 +1,7 @@
+import path from 'path'
+
 import devConfig from './develop'
 import prodConfig from './product'
-import * as path from 'path'
 import dbConfig from './dbConfig'
 
 interface dbConfigInterface {
