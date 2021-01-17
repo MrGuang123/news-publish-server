@@ -23,8 +23,6 @@ class ApiController {
 
     ctx.body = data
   }
-
-
 }
 
 export default ApiController
