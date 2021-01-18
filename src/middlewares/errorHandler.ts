@@ -1,6 +1,6 @@
 import Koa from 'koa'
 import { Logger } from 'log4js'
-import StatusConstance from '@assets/StatusConstance'
+import StatusConstance from '@libs/StatusConstance'
 class ErrorHandler{
 
   static error(app: Koa) {

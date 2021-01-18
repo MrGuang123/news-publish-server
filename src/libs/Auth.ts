@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import config from '../config'
 import { AuthInterface, AuthUser } from '@interfaces/AuthInterface'
 import UserDao from '@dao/UserDao'
-import StatusConstance from '@assets/StatusConstance'
+import StatusConstance from '@libs/StatusConstance'
 
 // jwt默认加密方式：(HMAC SHA256)
 export class Authentication implements AuthInterface {
