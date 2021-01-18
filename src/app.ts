@@ -10,19 +10,15 @@ import './libs/PathAlias'
 import config from './config'
 import ErrorHandler from './middlewares/errorHandler'
 import responseFilter from './middlewares/response'
+import { AuthMiddleware } from './middlewares/auth'
+import { Authentication } from '@libs/Auth'
 import Logger from './middlewares/logger'
 import ControllerInit from './ControllerInit'
 
 const app = new Koa()
 
-// 处理请求参数
-app.use(bodyParser())
-
-// 提供重要的安全头部信息
-app.use(helmet())
-
-// 允许跨域
-app.use(cors())
+// 权限校验
+app.use(AuthMiddleware(Authentication.getAuthentication()))
 
 // 日志添加到ctx
 Logger.init(app)
@@ -32,6 +28,15 @@ app.use(responseFilter('^/api'))
 
 // 错误处理
 ErrorHandler.error(app)
+
+// 处理请求参数
+app.use(bodyParser())
+
+// 提供重要的安全头部信息
+app.use(helmet())
+
+// 允许跨域
+app.use(cors())
 
 // 使用IOC方式初始化路由
 ControllerInit.init(app)

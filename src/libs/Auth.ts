@@ -5,8 +5,6 @@ import UserDao from '@dao/UserDao'
 import StatusConstance from '@assets/StatusConstance'
 
 // jwt默认加密方式：(HMAC SHA256)
-
-
 export class Authentication implements AuthInterface {
   private userDao: UserDao
   private secret: string
@@ -16,14 +14,19 @@ export class Authentication implements AuthInterface {
     this.secret = config.secret
   }
 
-  async validate(token: string): Promise<AuthUser> {
+  static getAuthentication() {
+    return new Authentication(new UserDao())
+  }
+
+  async validate(token: string): Promise<AuthUser> | undefined {
     try {
       const userInfo = jwt.verify(token, this.secret) as AuthUser
       const authUser: AuthUser = await this.userDao.findUser(userInfo)
 
       return authUser
     }catch(err) {
-      throw new Error(`403 - ${StatusConstance[403]}`)
+      // throw new Error(`403 - ${StatusConstance[403]}`)
+      return undefined
     }
   }
   getToken(authUser: AuthUser): string {
