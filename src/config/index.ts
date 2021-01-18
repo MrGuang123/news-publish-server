@@ -17,6 +17,8 @@ interface dbConfigInterface {
 const useConfig = process.env.NODE_ENV === 'product' ? prodConfig : devConfig
 const config = {
   staticDir: path.join(__dirname, '../', 'assets'),
+  // 不需要权限校验的路由
+  authBlackList: ['^/api/auth'],
   dbConfig: dbConfig || {} as dbConfigInterface
 }
 

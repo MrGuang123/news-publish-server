@@ -1,11 +1,12 @@
 import { Context } from 'koa'
 import { AuthInterface } from '@interfaces/AuthInterface'
+import config from '../config'
 
 interface AuthOptions {
   blackList?: string[]
 }
 
-export function AuthMiddleware(authentication: AuthInterface, options:AuthOptions = {blackList: ['^/api/auth']}) {
+export function AuthMiddleware(authentication: AuthInterface, options:AuthOptions = {blackList: config.authBlackList}) {
   return async (ctx: Context, next: () => Promise<unknown>) => {
     // 使用Bearer规范的token
     // 当前地址是否包含在黑名单中，如果是返回true
