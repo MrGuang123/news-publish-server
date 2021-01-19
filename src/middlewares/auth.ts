@@ -17,7 +17,7 @@ export function AuthMiddleware(authentication: AuthInterface, options:AuthOption
     console.log(isInBlackList)
     console.log(options)
     if(!isInBlackList && !ctx.headers.authorization) {
-      return ctx.status = 403
+      ctx.status = 403
     }else if(!isInBlackList) {
       const tokenArr = ctx.headers.authorization.split(' ');
       const token = tokenArr[0] === 'Bearer' ? tokenArr[1] : ''
