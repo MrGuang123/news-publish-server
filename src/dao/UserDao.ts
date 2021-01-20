@@ -20,7 +20,7 @@ class UserDao {
   }
 
   // 获取单个用户信息
-  getUserInfo(userName: string): Promise<AuthUser>{
+  getUserInfo(userName: string): Promise<AuthUser> {
     return UserModel.findOne({
       where: {
         userName: userName
@@ -32,7 +32,7 @@ class UserDao {
   }
 
   // 创建用户
-  createUser(userInfo: AuthUser): Promise<AuthUser>{
+  createUser(userInfo: AuthUser): Promise<AuthUser> {
     return UserModel.findOne({
       where: {
         id: userInfo.id,
@@ -44,14 +44,20 @@ class UserDao {
   }
 
   // 更新用户
-  async updateUser(targetUserInfo: updateData){
-    const result = await UserModel.upsert(targetUserInfo)
-    console.log(result)
+  async updateUser(targetUserInfo: updateData) {
+    const result = await UserModel.update(targetUserInfo, {
+      where: {
+        id: targetUserInfo.id
+      }
+    })
+
+    const user = await this.getUserInfo(targetUserInfo.userName)
+    console.log(user.toJSON())
     return result
   }
 
   // 删除用户
-  deleteUser(userInfo: AuthUser): Promise<AuthUser>{
+  deleteUser(userInfo: AuthUser): Promise<AuthUser> {
     return UserModel.findOne({
       where: {
         id: userInfo.id,

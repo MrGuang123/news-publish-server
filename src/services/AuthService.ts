@@ -11,17 +11,18 @@ class AuthService implements AuthControllerInterface {
 
   // 获取全部用户列表
   async login(params: LoginParam) {
-    if(!params.userName || !params.password) {
+    if (!params.userName || !params.password) {
       return 'ErrorCode:400'
     }
     let user = await this.userDao.getUserInfo(params.userName)
     const userJson = user.toJSON()
-
+    delete userJson.token
     // console.log(user.toJSON())
     const token = this.authentication.getToken(userJson)
-    user.token = token
-
-    return this.userDao.updateUser(user)
+    userJson.token = token
+    console.log(token)
+    console.log(token.length)
+    return this.userDao.updateUser(userJson)
 
   }
 
@@ -31,7 +32,7 @@ class AuthService implements AuthControllerInterface {
       pageIndex: 1,
       pageSize: 10
     }, params)
-return 'world'
+    return 'world'
     // return this.userDao.getUserList(param)
   }
 }
