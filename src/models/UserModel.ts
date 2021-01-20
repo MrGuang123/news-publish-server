@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize'
 import sequelize from '@libs/DbConnect'
-import { UserDataInterface } from '@interfaces/UserDataInterface'
+import { UserDataInterface } from '@interfaces/UserInterface'
 import dateFormat from '@utils/dateFormat'
 
 class User extends Model implements UserDataInterface {

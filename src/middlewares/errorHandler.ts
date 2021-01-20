@@ -34,6 +34,15 @@ class ErrorHandler{
           msg: `${statusChar} - ${ctx.request.url}`
         }
       }
+
+      if(typeof ctx.body === 'string' && ctx.body.includes('ErrorCode')) {
+        const ErrorCode = Number(ctx.body.split(':')[1])
+
+        ctx.body = {
+          code: ErrorCode,
+          msg: `${StatusConstance[ErrorCode]} - ${ctx.request.url}`
+        }
+      }
     })
   }
 }

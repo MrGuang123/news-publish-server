@@ -4,6 +4,7 @@ interface status {
 
 const StatusConstance: status = {
   200: '请求成功',
+  400: '请求参数有误',
   401: '未获取授权',
   403: '禁止访问',
   404: '没有找到该接口',

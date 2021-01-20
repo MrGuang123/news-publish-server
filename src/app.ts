@@ -30,6 +30,8 @@ app.use(responseFilter('^/api'))
 ErrorHandler.error(app)
 
 // 处理请求参数
+// koa-bodyparser不支持Content-type为application/form-data类型的数据，koa-body中间件可以支持
+// form-data类型的数据是上传多文件的类型，enctype设置为multipart/form-data
 app.use(bodyParser())
 
 // 提供重要的安全头部信息

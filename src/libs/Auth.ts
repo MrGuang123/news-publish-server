@@ -21,7 +21,7 @@ export class Authentication implements AuthInterface {
   async validate(token: string): Promise<AuthUser> | undefined {
     try {
       const userInfo = jwt.verify(token, this.secret) as AuthUser
-      const authUser: AuthUser = await this.userDao.getUserInfo(userInfo)
+      const authUser: AuthUser = await this.userDao.getUserInfo(userInfo.userName)
 
       return authUser
     }catch(err) {

@@ -1,6 +1,7 @@
 import { UserInterface, UserListQueryInterface } from '@interfaces/UserInterface';
 import { GET, POST, PUT, DELETE, route } from 'awilix-koa'
 import Router from '@koa/router'
+import { CITEXT } from 'sequelize/types';
 
 interface UserServiceInterface {
   userService: UserInterface;

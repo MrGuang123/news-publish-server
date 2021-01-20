@@ -1,4 +1,3 @@
-import { UserDataInterface } from "@interfaces/UserDataInterface"
 
 export interface UserInterface {
   getUserList(params: UserListQueryInterface): Promise<UserDataInterface[]>
@@ -12,4 +11,15 @@ export interface UserListQueryInterface {
   type: number
   pageIndex?: number
   pageSize?: number
+}
+
+export interface UserDataInterface {
+  id: number
+  userName: string
+  password: string
+  telephone: string
+  roleIds: string
+  token?: string
+  createdAt?: any
+  updatedAt?: any
 }
