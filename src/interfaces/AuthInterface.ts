@@ -5,7 +5,6 @@ export interface AuthUser {
   userName: string
   telephone: string
   roleIds: string
-  token?: string
   iat?: number
   exp?: number
 }
@@ -20,7 +19,6 @@ export interface LoginResult {
   username: string
   telephone: string
   roleIds: string
-  token: string
   iat?: number
   exp?: number
 }

@@ -32,28 +32,17 @@ class UserDao {
   }
 
   // 创建用户
-  createUser(userInfo: AuthUser): Promise<AuthUser> {
-    return UserModel.findOne({
-      where: {
-        id: userInfo.id,
-        telephone: userInfo.telephone,
-        roleIds: userInfo.roleIds
-      },
-      attributes: ['id', 'telephone', 'roleIds']
-    })
+  createUser(userInfo: { [key:string]: any }): Promise<AuthUser> {
+    return UserModel.create(userInfo)
   }
 
   // 更新用户
-  async updateUser(targetUserInfo: updateData) {
-    const result = await UserModel.update(targetUserInfo, {
+  updateUser(targetUserInfo: updateData) {
+    return UserModel.update(targetUserInfo, {
       where: {
         id: targetUserInfo.id
       }
     })
-
-    const user = await this.getUserInfo(targetUserInfo.userName)
-    console.log(user.toJSON())
-    return result
   }
 
   // 删除用户

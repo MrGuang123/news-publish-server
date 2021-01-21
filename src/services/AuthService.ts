@@ -14,16 +14,17 @@ class AuthService implements AuthControllerInterface {
     if (!params.userName || !params.password) {
       return 'ErrorCode:400'
     }
+
     let user = await this.userDao.getUserInfo(params.userName)
     const userJson = user.toJSON()
     delete userJson.token
-    // console.log(user.toJSON())
+
     const token = this.authentication.getToken(userJson)
     userJson.token = token
-    console.log(token)
-    console.log(token.length)
-    return this.userDao.updateUser(userJson)
 
+    await this.userDao.updateUser(userJson)
+    const result = await this.userDao.getUserInfo(params.userName)
+    return result.toJSON()
   }
 
   // 获取一个用户信息

@@ -1,7 +1,6 @@
-import { UserInterface, UserListQueryInterface } from '@interfaces/UserInterface';
+import { UserInterface, UserListQueryInterface, UserCreateParams } from '@interfaces/UserInterface';
 import { GET, POST, PUT, DELETE, route } from 'awilix-koa'
 import Router from '@koa/router'
-import { CITEXT } from 'sequelize/types';
 
 interface UserServiceInterface {
   userService: UserInterface;
@@ -39,7 +38,7 @@ class ApiController {
   @route('/users')
   @POST()
   async createUser(ctx: Router.RouterContext, next: () => Promise<unknown>): Promise<any> {
-    const params: UserListQueryInterface = ctx.request.query
+    const params: UserCreateParams = ctx.request.body
     const data = await this.userService.createUser(params)
 
     ctx.body = data

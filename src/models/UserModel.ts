@@ -10,7 +10,6 @@ class User extends Model implements UserDataInterface {
   public password: string
   public telephone: string | null
   public roleIds: string
-  public token?: string
   public createdAt?: Date
   public updatedAt?: Date
 }
@@ -18,28 +17,25 @@ class User extends Model implements UserDataInterface {
 User.init({
   id: {
     type: DataTypes.INTEGER.UNSIGNED,
+    defaultValue: 0,
     autoIncrement: true,
     primaryKey: true
   },
   userName: {
-    type: new DataTypes.STRING(100),
+    type: new DataTypes.STRING,
     allowNull: false
   },
   password: {
-    type: new DataTypes.STRING(100),
+    type: new DataTypes.STRING,
     allowNull: false
   },
   telephone: {
-    type: new DataTypes.STRING(11),
+    type: new DataTypes.STRING,
     allowNull: false
   },
   roleIds: {
-    type: new DataTypes.STRING(255),
+    type: new DataTypes.STRING,
     allowNull: false
-  },
-  token: {
-    type: new DataTypes.STRING(255),
-    allowNull: true
   },
   createdAt: {
     type: new DataTypes.DATE,
@@ -57,7 +53,5 @@ User.init({
   tableName: 'user',
   sequelize
 })
-
-// console.log(User)
 
 export default User

@@ -1,4 +1,4 @@
-import { UserInterface, UserListQueryInterface } from "@interfaces/UserInterface"
+import { UserInterface, UserListQueryInterface, UserCreateParams } from "@interfaces/UserInterface"
 import UserDao from '@dao/UserDao'
 class UserService implements UserInterface {
   public userDao: UserDao
@@ -27,13 +27,15 @@ class UserService implements UserInterface {
   }
 
   // 创建用户
-  createUser(params: UserListQueryInterface) {
-    const param = Object.assign({
-      pageIndex: 1,
-      pageSize: 10
-    }, params)
+  createUser(params: UserCreateParams) {
+    const mustParam = ['userName', 'password', 'telephone', 'roleIds']
+    const paramEnough = mustParam.every(key => params[key] !== 'undefined')
 
-    return this.userDao.getUserList(param)
+    if(!paramEnough) {
+      return 'ErrorCode:400'
+    }else {
+      return this.userDao.createUser(Object.assign({id:1},params))
+    }
   }
 
   // 更新用户信息
