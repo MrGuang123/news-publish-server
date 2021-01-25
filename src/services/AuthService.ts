@@ -11,20 +11,25 @@ class AuthService implements AuthControllerInterface {
 
   // 获取全部用户列表
   async login(params: LoginParam) {
+    // 如果不存在用户名或者密码返回参数错误
     if (!params.userName || !params.password) {
       return 'ErrorCode:400'
     }
 
+    // 从数据库读取用户信息
     let user = await this.userDao.getUserInfo(params.userName)
+    // 如果密码不符合返回权限错误
+    if(user.password !== params.password) {
+      return 'ErrorCode:401'
+    }
+
+    // 将model进行JSON化并生成token
     const userJson = user.toJSON()
-    delete userJson.token
-
     const token = this.authentication.getToken(userJson)
-    userJson.token = token
 
-    await this.userDao.updateUser(userJson)
-    const result = await this.userDao.getUserInfo(params.userName)
-    return result.toJSON()
+    // 将token等信息存储到Redis
+
+    return userJson
   }
 
   // 获取一个用户信息

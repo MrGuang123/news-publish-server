@@ -9,8 +9,10 @@ interface dbConfigInterface {
   pwd: string
   dialect: string
   host: string
-  port: string
+  port: number
   dbName: string
+  redisPort: number
+  redisPwd: string
 }
 
 // 需要下载ts的node类型包：@types/node来识别node相关api
@@ -21,6 +23,7 @@ const config = {
   // authBlackList: ['^/api/auth/login'],
   dbConfig: dbConfig || {} as dbConfigInterface
 }
+
 
 export default {
   ...config,

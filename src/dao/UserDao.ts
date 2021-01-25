@@ -25,9 +25,9 @@ class UserDao {
       where: {
         userName: userName
       },
-      attributes: {
-        exclude: ['password']
-      }
+      // attributes: {
+      //   exclude: ['password']
+      // }
     })
   }
 

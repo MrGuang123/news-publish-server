@@ -3,6 +3,7 @@ export interface AuthUser {
   toJSON(): any;
   id: number
   userName: string
+  password: string
   telephone: string
   roleIds: string
   iat?: number
