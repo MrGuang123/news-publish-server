@@ -1,7 +1,7 @@
 import Koa from 'koa'
 import { Logger } from 'log4js'
 import StatusConstance from '@libs/StatusConstance'
-class ErrorHandler{
+class ErrorHandler {
 
   static error(app: Koa) {
     // 全局错误捕获
@@ -10,7 +10,12 @@ class ErrorHandler{
         await next()
       } catch (err) {
         const code: number = ctx.code || 500
-        const statusChar = StatusConstance[code] || 'UNKNOWN'
+        let statusChar: string
+        if (err.errors && err.errors[0] && err.errors[0].message) {
+          statusChar = err.errors[0].message
+        } else {
+          statusChar = StatusConstance[code] || 'UNKNOWN'
+        }
 
         ctx.logger.error(`状态码：${code} - ${statusChar} - 消息：${err.message}`)
         ctx.status = code
@@ -24,7 +29,7 @@ class ErrorHandler{
     // 捕获非200错误
     app.use(async (ctx, next) => {
       await next()
-      if(ctx.status !== 200) {
+      if (ctx.status !== 200) {
         const statusChar = StatusConstance[ctx.status] || 'UNKNOWN'
 
         ctx.logger.error(`状态码：${ctx.status} - ${statusChar} - 消息：${ctx.request.url}`)
@@ -35,7 +40,7 @@ class ErrorHandler{
         }
       }
 
-      if(typeof ctx.body === 'string' && ctx.body.includes('ErrorCode')) {
+      if (typeof ctx.body === 'string' && ctx.body.includes('ErrorCode')) {
         const ErrorCode = Number(ctx.body.split(':')[1])
 
         ctx.body = {

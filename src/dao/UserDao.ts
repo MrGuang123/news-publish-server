@@ -1,5 +1,5 @@
 import UserModel from '@models/UserModel'
-import { UserListQueryInterface } from "@interfaces/UserInterface"
+import { UserListQueryInterface, UserCreateParams } from "@interfaces/UserInterface"
 import { AuthUser } from '@interfaces/AuthInterface'
 
 type updateData = {
@@ -32,7 +32,7 @@ class UserDao {
   }
 
   // 创建用户
-  createUser(userInfo: { [key:string]: any }): Promise<AuthUser> {
+  createUser(userInfo: UserCreateParams): Promise<AuthUser> {
     return UserModel.create(userInfo)
   }
 

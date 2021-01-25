@@ -31,10 +31,10 @@ class UserService implements UserInterface {
     const mustParam = ['userName', 'password', 'telephone', 'roleIds']
     const paramEnough = mustParam.every(key => params[key] !== 'undefined')
 
-    if(!paramEnough) {
+    if (!paramEnough) {
       return 'ErrorCode:400'
-    }else {
-      return this.userDao.createUser(Object.assign({id:1},params))
+    } else {
+      return this.userDao.createUser(params)
     }
   }
 
