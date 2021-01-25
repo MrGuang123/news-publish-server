@@ -1,9 +1,11 @@
 import redis from 'redis'
 import config from '../config'
-import Koa from 'koa'
+import { promisify } from 'util'
 
 class RedisClass {
-  public redis: redis.RedisClient
+  private redis: redis.RedisClient
+  private getAsync
+
   constructor() {
     const { dbConfig } = config
     this.redis = redis.createClient({
@@ -12,34 +14,45 @@ class RedisClass {
       password: dbConfig.redisPwd
     })
 
+    this.getAsync = promisify(this.redis.get).bind(this.redis)
+
     this.initListenEvent()
   }
 
-  static initRedis() {
-    return async (ctx: Koa.Context, next: () => Promise<any>) => {
-      ctx.store = new RedisClass()
+  // redis监听事件
+  private initListenEvent() {
+    this.redis.on('error', function (err) {
+      console.log('Redis链接失败', err);
+    });
+
+    this.redis.on('connect', function () {
+      console.log('Redis连接成功!');
+    });
+  }
+
+  // 获取redis数据
+  async getKey(key: string) {
+    const result = await this.getAsync(key)
+
+    return result
+  }
+
+  // 设置redis数据
+  async setKey(key: string, value: any, expires?: number) {
+    this.redis.set(key, value, (err, result) => {
+      console.log('err', err)
+    })
+    if (!isNaN(expires) && expires > 0) {
+      this.redis.expire(key, Number(expires))
     }
   }
 
-  initListenEvent() {
-    this.redis.on('ready',function(res){
-      console.log('redis ready');
-    });
-
-    this.redis.on('error', function (err) {
-        console.log(err);
-    });
-
-    this.redis.on('connect',function(){
-        console.log('redis connect success!');
-    });
+  // 销毁redis数据
+  destroyKey(key: string) {
+    this.redis.del(key)
   }
-
-  get(key: string) {}
-
-  set(key: string, value: any) {}
-
-  destroy(key:string) {}
 }
 
-export default RedisClass
+const store = new RedisClass()
+
+export default store

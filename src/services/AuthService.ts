@@ -1,6 +1,8 @@
 import { AuthControllerInterface, LoginParam, LogoutParam, LoginResult } from "@interfaces/AuthInterface"
 import UserDao from '@dao/UserDao'
 import { Authentication } from '@libs/Auth'
+import store from '@libs/RedisClass'
+
 class AuthService implements AuthControllerInterface {
   public userDao: UserDao
   public authentication: Authentication
@@ -11,6 +13,9 @@ class AuthService implements AuthControllerInterface {
 
   // 获取全部用户列表
   async login(params: LoginParam) {
+    store.setKey('token', JSON.stringify({ a: 1, b: 2 }))
+    console.log('getKey', await store.getKey('token'))
+    return
     // 如果不存在用户名或者密码返回参数错误
     if (!params.userName || !params.password) {
       return 'ErrorCode:400'
@@ -19,7 +24,7 @@ class AuthService implements AuthControllerInterface {
     // 从数据库读取用户信息
     let user = await this.userDao.getUserInfo(params.userName)
     // 如果密码不符合返回权限错误
-    if(user.password !== params.password) {
+    if (user.password !== params.password) {
       return 'ErrorCode:401'
     }
 
