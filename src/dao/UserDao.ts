@@ -1,5 +1,5 @@
 import UserModel from '@models/UserModel'
-import { UserListQueryInterface, UserCreateParams } from "@interfaces/UserInterface"
+import { UserListQueryInterface, UserCreateParams, UserDataInterface } from "@interfaces/UserInterface"
 import { AuthUser } from '@interfaces/AuthInterface'
 
 type updateData = {
@@ -20,7 +20,7 @@ class UserDao {
   }
 
   // 获取单个用户信息
-  getUserInfo(userFlag: string | number): Promise<AuthUser> {
+  getUserInfo(userFlag: string | number): Promise<UserDataInterface> {
     const action = typeof userFlag === 'string' ? 'userName' : 'id'
     return UserModel.findOne({
       where: {

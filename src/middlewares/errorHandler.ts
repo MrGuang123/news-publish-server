@@ -29,7 +29,7 @@ class ErrorHandler {
     // 捕获非200错误
     app.use(async (ctx, next) => {
       await next()
-      if (ctx.status !== 200) {
+      if (ctx.status >= 300) {
         const statusChar = StatusConstance[ctx.status] || 'UNKNOWN'
 
         ctx.logger.error(`状态码：${ctx.status} - ${statusChar} - 消息：${ctx.request.url}`)

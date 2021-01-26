@@ -1,4 +1,4 @@
-import { UserInterface, UserListQueryInterface, UserCreateParams } from '@interfaces/UserInterface';
+import { UserInterface, UserListQueryInterface, UserInfoQueryInterface, UserCreateParams } from '@interfaces/UserInterface';
 import { GET, POST, PUT, DELETE, route } from 'awilix-koa'
 import Router from '@koa/router'
 
@@ -28,7 +28,7 @@ class ApiController {
   @route('/users/:id')
   @GET()
   async getUserInfo(ctx: Router.RouterContext, next: () => Promise<unknown>): Promise<any> {
-    const params: UserListQueryInterface = ctx.request.query
+    const params: UserInfoQueryInterface = ctx.params
     const data = await this.userService.getUserInfo(params)
 
     ctx.body = data

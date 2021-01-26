@@ -1,4 +1,4 @@
-import { UserInterface, UserListQueryInterface, UserCreateParams } from "@interfaces/UserInterface"
+import { UserInterface, UserListQueryInterface, UserInfoQueryInterface, UserDataInterface, UserCreateParams } from "@interfaces/UserInterface"
 import UserDao from '@dao/UserDao'
 class UserService implements UserInterface {
   public userDao: UserDao
@@ -17,13 +17,15 @@ class UserService implements UserInterface {
   }
 
   // 获取一个用户信息
-  getUserInfo(params: UserListQueryInterface) {
-    const param = Object.assign({
-      pageIndex: 1,
-      pageSize: 10
-    }, params)
+  async getUserInfo(params: UserInfoQueryInterface) {
+    const { id } = params
 
-    return this.userDao.getUserList(param)
+    try {
+      const result = await this.userDao.getUserInfo(Number(id))
+      return result
+    } catch (err) {
+      return undefined
+    }
   }
 
   // 创建用户
