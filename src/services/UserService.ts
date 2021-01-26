@@ -32,7 +32,7 @@ class UserService implements UserInterface {
     const paramEnough = mustParam.every(key => params[key] !== 'undefined')
 
     if (!paramEnough) {
-      return 'ErrorCode:400'
+      return 'ErrorInfo:400:创建用户参数不足'
     } else {
       return this.userDao.createUser(params)
     }

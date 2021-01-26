@@ -30,3 +30,6 @@ https://www.teambition.com/
 
 ### theme
 https://github.com/sudhindrasajjal/dotfiles   https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k
+
+### service返回错误格式
+ErrorInfo:400:退出登陆失败

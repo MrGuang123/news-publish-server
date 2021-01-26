@@ -10,6 +10,7 @@ class User extends Model implements UserDataInterface {
   public password: string
   public telephone: string
   public roleIds: string
+  public token?: string
   public createdAt?: Date
   public updatedAt?: Date
 }
@@ -21,7 +22,6 @@ class User extends Model implements UserDataInterface {
 User.init({
   id: {
     type: DataTypes.INTEGER,
-    defaultValue: 0,
     autoIncrement: true,
     primaryKey: true
   },
@@ -41,6 +41,10 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false
   },
+  token: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   createdAt: {
     type: DataTypes.DATE,
     get() {
@@ -57,5 +61,8 @@ User.init({
   tableName: 'user',
   sequelize
 })
+
+// 如果表不存在则创建表，如果存在则不执行操作，异步操作需要添加catch捕获
+User.sync().catch(e => console.log(e))
 
 export default User

@@ -40,12 +40,14 @@ class ErrorHandler {
         }
       }
 
-      if (typeof ctx.body === 'string' && ctx.body.includes('ErrorCode')) {
-        const ErrorCode = Number(ctx.body.split(':')[1])
+      if (typeof ctx.body === 'string' && ctx.body.includes('ErrorInfo')) {
+        const errorArr = ctx.body.split(':')
+        const ErrorCode = Number(errorArr[1]) || 400
+        const errorMsg = errorArr[2] || StatusConstance[ErrorCode] || '客户端错误'
 
         ctx.body = {
           code: ErrorCode,
-          msg: `${StatusConstance[ErrorCode]} - ${ctx.request.url}`
+          msg: `${errorMsg} - ${ctx.request.url}`
         }
       }
     })

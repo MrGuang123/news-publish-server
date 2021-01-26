@@ -1,4 +1,4 @@
-import { AuthControllerInterface, LoginParam, LogoutParam, LoginResult } from "@interfaces/AuthInterface"
+import { AuthControllerInterface, LoginParam, AuthUser, LoginResult } from "@interfaces/AuthInterface"
 import UserDao from '@dao/UserDao'
 import { Authentication } from '@libs/Auth'
 // import store from '@libs/RedisClass'
@@ -15,14 +15,14 @@ class AuthService implements AuthControllerInterface {
   async login(params: LoginParam) {
     // 如果不存在用户名或者密码返回参数错误
     if (!params.userName || !params.password) {
-      return 'ErrorCode:400'
+      return 'ErrorInfo:400:用户名或者密码不存在'
     }
 
     // 从数据库读取用户信息
     let user = await this.userDao.getUserInfo(params.userName)
     // 如果密码不符合返回权限错误
     if (user.password !== params.password) {
-      return 'ErrorCode:401'
+      return 'ErrorInfo:401:密码验证错误'
     }
 
     // 将model进行JSON化并生成token
@@ -38,17 +38,28 @@ class AuthService implements AuthControllerInterface {
     //   token
     // }))
 
-    return userJson
+    // 将token添加到用户信息中
+    try {
+      await this.userDao.updateUser(userJson)
+
+      return userJson
+    }catch(err) {
+      return 'ErrorInfo:400:token存储失败'
+    }
   }
 
   // 获取一个用户信息
-  logout(params: LogoutParam) {
-    const param = Object.assign({
-      pageIndex: 1,
-      pageSize: 10
-    }, params)
-    return 'world'
-    // return this.userDao.getUserList(param)
+  async logout(userId: number) {
+    try {
+      const userData = await this.userDao.getUserInfo(Number(userId)) as AuthUser
+      const userJson = userData.toJSON()
+      userJson.token = null
+
+      await this.userDao.updateUser(userJson)
+      return '退出登陆成功'
+    }catch(err) {
+      return 'ErrorInfo:400:退出登陆失败'
+    }
   }
 }
 

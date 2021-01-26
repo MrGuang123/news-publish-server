@@ -26,7 +26,8 @@ class AuthController {
   @route('/logout')
   @GET()
   async logout(ctx: Router.RouterContext, next: () => Promise<unknown>) {
-    const result = await this.authService.logout(ctx.request.query)
+    const userId = ctx.request.query.userId
+    const result = await this.authService.logout(userId)
 
     ctx.body = result
   }

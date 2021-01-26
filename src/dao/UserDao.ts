@@ -20,10 +20,11 @@ class UserDao {
   }
 
   // 获取单个用户信息
-  getUserInfo(userName: string): Promise<AuthUser> {
+  getUserInfo(userFlag: string | number): Promise<AuthUser> {
+    const action = typeof userFlag === 'string' ? 'userName' : 'id'
     return UserModel.findOne({
       where: {
-        userName: userName
+        [action]: userFlag
       },
       // attributes: {
       //   exclude: ['password']

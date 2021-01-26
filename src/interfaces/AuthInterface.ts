@@ -6,6 +6,7 @@ export interface AuthUser {
   password: string
   telephone: string
   roleIds: string
+  token?: string
   iat?: number
   exp?: number
 }
@@ -35,5 +36,5 @@ export interface AuthInterface {
 
 export interface AuthControllerInterface {
   login(params: LoginParam): Promise<Object>
-  logout(params: LogoutParam): string
+  logout(userId: number): any
 }

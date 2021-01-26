@@ -23,6 +23,7 @@ export interface UserDataInterface {
   password: string
   telephone: string
   roleIds: string
+  token?: string
   createdAt?: any
   updatedAt?: any
 }
