@@ -44,7 +44,7 @@ class ErrorHandler {
         const errorArr = ctx.body.split(':')
         const ErrorCode = Number(errorArr[1]) || 400
         const errorMsg = errorArr[2] || StatusConstance[ErrorCode] || '客户端错误'
-
+        ctx.status = ErrorCode
         ctx.body = {
           code: ErrorCode,
           msg: `${errorMsg} - ${ctx.request.url}`

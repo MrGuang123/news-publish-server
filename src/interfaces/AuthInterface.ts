@@ -35,6 +35,6 @@ export interface AuthInterface {
 }
 
 export interface AuthControllerInterface {
-  login(params: LoginParam): Promise<Object>
+  login(params: LoginParam, originalUrl: string): Promise<Object>
   logout(userId: number): any
 }

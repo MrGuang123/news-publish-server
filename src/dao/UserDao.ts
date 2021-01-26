@@ -12,7 +12,7 @@ class UserDao {
 
     return UserModel.findAll({
       attributes: {
-        exclude: ['password']
+        exclude: ['password', 'token']
       },
       limit: params.pageSize,
       offset: params.pageSize * (params.pageIndex - 1)

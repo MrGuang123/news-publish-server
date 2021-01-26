@@ -17,7 +17,7 @@ class AuthController {
   @route('/login')
   @POST()
   async login(ctx: Router.RouterContext, next: () => Promise<unknown>) {
-    const result = await this.authService.login(ctx.request.body)
+    const result = await this.authService.login(ctx.request.body, ctx.originalUrl)
 
     ctx.body = result
   }

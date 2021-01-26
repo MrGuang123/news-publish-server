@@ -1,6 +1,7 @@
 import { Context } from 'koa'
 import { AuthInterface } from '@interfaces/AuthInterface'
 import config from '../config'
+import { isInBlackListValidate } from '@utils/smallUtils'
 
 interface AuthOptions {
   blackList?: string[]
@@ -10,10 +11,7 @@ export function AuthMiddleware(authentication: AuthInterface, options: AuthOptio
   return async (ctx: Context, next: () => Promise<unknown>) => {
     // 使用Bearer规范的token
     // 当前地址是否包含在黑名单中，如果是返回true
-    const isInBlackList = options.blackList && options.blackList.some(url => {
-      const reg = new RegExp(url)
-      return reg.test(ctx.originalUrl)
-    })
+    const isInBlackList = isInBlackListValidate(ctx.originalUrl)
 
     if (!isInBlackList && !ctx.headers.authorization) {
       ctx.status = 403

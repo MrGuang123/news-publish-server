@@ -1,6 +1,7 @@
 import { AuthControllerInterface, LoginParam, AuthUser, LoginResult } from "@interfaces/AuthInterface"
 import UserDao from '@dao/UserDao'
 import { Authentication } from '@libs/Auth'
+import { isInBlackListValidate } from '@utils/smallUtils'
 // import store from '@libs/RedisClass'
 
 class AuthService implements AuthControllerInterface {
@@ -11,8 +12,8 @@ class AuthService implements AuthControllerInterface {
     this.authentication = Authentication.getAuthentication()
   }
 
-  // 获取全部用户列表
-  async login(params: LoginParam) {
+  // 登录
+  async login(params: LoginParam, originalUrl: string) {
     // 如果不存在用户名或者密码返回参数错误
     if (!params.userName || !params.password) {
       return 'ErrorInfo:400:用户名或者密码不存在'
@@ -23,6 +24,9 @@ class AuthService implements AuthControllerInterface {
     // 如果密码不符合返回权限错误
     if (user.password !== params.password) {
       return 'ErrorInfo:401:密码验证错误'
+    }
+    if (user.token === null && !isInBlackListValidate(originalUrl)) {
+      return 'ErrorInfo:401:没有权限或者权限已失效'
     }
 
     // 将model进行JSON化并生成token
@@ -43,12 +47,12 @@ class AuthService implements AuthControllerInterface {
       await this.userDao.updateUser(userJson)
 
       return userJson
-    }catch(err) {
+    } catch (err) {
       return 'ErrorInfo:400:token存储失败'
     }
   }
 
-  // 获取一个用户信息
+  // 退出登录
   async logout(userId: number) {
     try {
       const userData = await this.userDao.getUserInfo(Number(userId)) as AuthUser
@@ -57,7 +61,7 @@ class AuthService implements AuthControllerInterface {
 
       await this.userDao.updateUser(userJson)
       return '退出登陆成功'
-    }catch(err) {
+    } catch (err) {
       return 'ErrorInfo:400:退出登陆失败'
     }
   }
