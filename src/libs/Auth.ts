@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import config from '../config'
 import { AuthInterface, AuthUser } from '@interfaces/AuthInterface'
 import UserDao from '@dao/UserDao'
-import StatusConstance from '@libs/StatusConstance'
+// import store from '@libs/RedisClass'
 
 // jwt默认加密方式：(HMAC SHA256)
 export class Authentication implements AuthInterface {
@@ -21,11 +21,9 @@ export class Authentication implements AuthInterface {
   async validate(token: string): Promise<AuthUser> | undefined {
     try {
       const userInfo = jwt.verify(token, this.secret) as AuthUser
-      const authUser: AuthUser = await this.userDao.getUserInfo(userInfo.userName)
 
-      return authUser
+      return userInfo
     }catch(err) {
-      // throw new Error(`403 - ${StatusConstance[403]}`)
       return undefined
     }
   }

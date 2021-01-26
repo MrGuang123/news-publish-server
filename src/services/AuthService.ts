@@ -1,7 +1,7 @@
 import { AuthControllerInterface, LoginParam, LogoutParam, LoginResult } from "@interfaces/AuthInterface"
 import UserDao from '@dao/UserDao'
 import { Authentication } from '@libs/Auth'
-import store from '@libs/RedisClass'
+// import store from '@libs/RedisClass'
 
 class AuthService implements AuthControllerInterface {
   public userDao: UserDao
@@ -13,9 +13,6 @@ class AuthService implements AuthControllerInterface {
 
   // 获取全部用户列表
   async login(params: LoginParam) {
-    store.setKey('token', JSON.stringify({ a: 1, b: 2 }))
-    console.log('getKey', await store.getKey('token'))
-    return
     // 如果不存在用户名或者密码返回参数错误
     if (!params.userName || !params.password) {
       return 'ErrorCode:400'
@@ -31,8 +28,15 @@ class AuthService implements AuthControllerInterface {
     // 将model进行JSON化并生成token
     const userJson = user.toJSON()
     const token = this.authentication.getToken(userJson)
+    userJson.token = token
+    delete userJson.password
 
     // 将token等信息存储到Redis
+    // store.setKey(`token:${userJson.id}`, JSON.stringify({
+    //   userName: userJson.userName,
+    //   password: userJson.password,
+    //   token
+    // }))
 
     return userJson
   }

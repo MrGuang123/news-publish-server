@@ -30,6 +30,11 @@ class RedisClass {
     });
   }
 
+  // 判断是否存在key
+  isExists(key: string) {
+    return this.redis.exists(key)
+  }
+
   // 获取redis数据
   async getKey(key: string) {
     const result = await this.getAsync(key)
@@ -42,13 +47,18 @@ class RedisClass {
     this.redis.set(key, value, (err, result) => {
       console.log('err', err)
     })
-    if (!isNaN(expires) && expires > 0) {
-      this.redis.expire(key, Number(expires))
-    }
+
+    // 超时时间为秒
+    // if (!isNaN(expires) && expires > 0) {
+    //   this.redis.expire(key, Number(expires), function(err, result) {
+    //     console.log('err',err)
+    //     console.log('result',result)
+    //   })
+    // }
   }
 
   // 销毁redis数据
-  destroyKey(key: string) {
+  delKey(key: string) {
     this.redis.del(key)
   }
 }
