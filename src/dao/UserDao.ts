@@ -11,8 +11,11 @@ class UserDao {
   getUserList(params: UserListQueryInterface) {
 
     return UserModel.findAll({
+      where: {
+        isDelete: 0
+      },
       attributes: {
-        exclude: ['password', 'token']
+        exclude: ['password', 'token', 'isDelete']
       },
       limit: params.pageSize,
       offset: params.pageSize * (params.pageIndex - 1)
@@ -24,11 +27,12 @@ class UserDao {
     const action = typeof userFlag === 'string' ? 'userName' : 'id'
     return UserModel.findOne({
       where: {
+        isDelete: 0,
         [action]: userFlag
       },
-      // attributes: {
-      //   exclude: ['password']
-      // }
+      attributes: {
+        exclude: ['isDelete']
+      }
     })
   }
 
@@ -47,14 +51,22 @@ class UserDao {
   }
 
   // 删除用户
-  deleteUser(userInfo: AuthUser): Promise<AuthUser> {
-    return UserModel.findOne({
+  deleteUser(userInfo: AuthUser) {
+    // 真实删除
+    // return UserModel.destroy({
+    //   where: {
+    //     id: userInfo.id
+    //   }
+    // })
+
+    // 软删除，只改变属性
+    const params = Object.assign(userInfo, {
+      isDelete: 1
+    })
+    return UserModel.update(params, {
       where: {
-        id: userInfo.id,
-        telephone: userInfo.telephone,
-        roleIds: userInfo.roleIds
-      },
-      attributes: ['id', 'telephone', 'roleIds']
+        id: userInfo.id
+      }
     })
   }
 }

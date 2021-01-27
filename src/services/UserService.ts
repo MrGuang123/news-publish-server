@@ -51,13 +51,22 @@ class UserService implements UserInterface {
   }
 
   // 删除用户
-  deleteUser(params: UserListQueryInterface) {
-    const param = Object.assign({
-      pageIndex: 1,
-      pageSize: 10
-    }, params)
+  async deleteUser(params: UserInfoQueryInterface) {
+    const { id } = params
 
-    return this.userDao.getUserList(param)
+    try {
+      const userInfo = await this.userDao.getUserInfo(Number(id))
+      let userJson
+      if(userInfo) {
+        userJson = userInfo.toJSON()
+        await this.userDao.deleteUser(userJson)
+        return '删除成功'
+      }else {
+        return '用户不存在'
+      }
+    }catch (e) {
+      return '删除失败'
+    }
   }
 }
 

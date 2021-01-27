@@ -31,6 +31,7 @@ class AuthService implements AuthControllerInterface {
 
     // 将model进行JSON化并生成token
     const userJson = user.toJSON()
+    userJson.token = null
     const token = this.authentication.getToken(userJson)
     userJson.token = token
     delete userJson.password

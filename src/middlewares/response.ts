@@ -4,7 +4,7 @@ import StatusConstance from '@libs/StatusConstance'
 const responseFormat = (ctx: Context) => {
   const commonResponse = {
     code: ctx.status,
-    msg: StatusConstance[ctx.status] || '暂无数据',
+    msg: StatusConstance[ctx.status],
   }
   let key = ''
 

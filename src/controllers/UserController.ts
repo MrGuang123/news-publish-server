@@ -31,7 +31,7 @@ class ApiController {
     const params: UserInfoQueryInterface = ctx.params
     const data = await this.userService.getUserInfo(params)
 
-    ctx.body = data
+    ctx.body = data || {}
   }
 
   // 创建用户
@@ -58,7 +58,7 @@ class ApiController {
   @route('/users/:id')
   @DELETE()
   async deleteUser(ctx: Router.RouterContext, next: () => Promise<unknown>): Promise<any> {
-    const params: UserListQueryInterface = ctx.request.query
+    const params: UserInfoQueryInterface = ctx.params
     const data = await this.userService.deleteUser(params)
 
     ctx.body = data

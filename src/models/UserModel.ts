@@ -10,6 +10,7 @@ class User extends Model implements UserDataInterface {
   public password: string
   public telephone: string
   public roleIds: string
+  public isDelete!: boolean
   public token?: string
   public createdAt?: Date
   public updatedAt?: Date
@@ -40,6 +41,10 @@ User.init({
   roleIds: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  isDelete: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true
   },
   token: {
     type: DataTypes.STRING,
