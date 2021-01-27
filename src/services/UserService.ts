@@ -41,13 +41,15 @@ class UserService implements UserInterface {
   }
 
   // 更新用户信息
-  updateUser(params: UserListQueryInterface) {
-    const param = Object.assign({
-      pageIndex: 1,
-      pageSize: 10
-    }, params)
+  updateUser(params: UserCreateParams) {
+    const mustParam = ['userName', 'password', 'telephone', 'roleIds']
+    const paramEnough = mustParam.every(key => params[key] !== 'undefined')
 
-    return this.userDao.getUserList(param)
+    if (!paramEnough) {
+      return 'ErrorInfo:400:更新用户参数不足'
+    } else {
+      return this.userDao.updateUser(params)
+    }
   }
 
   // 删除用户

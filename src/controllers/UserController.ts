@@ -48,7 +48,7 @@ class ApiController {
   @route('/users/:id')
   @PUT()
   async updateUser(ctx: Router.RouterContext, next: () => Promise<unknown>): Promise<any> {
-    const params: UserListQueryInterface = ctx.request.query
+    const params: UserCreateParams = ctx.request.body
     const data = await this.userService.updateUser(params)
 
     ctx.body = data

@@ -3,7 +3,7 @@ export interface UserInterface {
   getUserList(params: UserListQueryInterface): Promise<UserDataInterface[]>
   getUserInfo(params: UserInfoQueryInterface): Promise<UserDataInterface>
   createUser(params: { [key: string]: any }): Promise<any> | string
-  updateUser(params: UserListQueryInterface): Promise<UserDataInterface[]>
+  updateUser(params: { [key: string]: any }): Promise<any> | string
   deleteUser(params: UserInfoQueryInterface): Promise<unknown>
 }
 
