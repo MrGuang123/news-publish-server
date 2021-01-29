@@ -18,7 +18,7 @@ export interface UserInfoQueryInterface {
 }
 
 export interface UserCreateParams {
-  [key: string]: string
+  [key: string]: string | number
 }
 
 export interface UserDataInterface {

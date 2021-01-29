@@ -1,6 +1,19 @@
-const dateFormat = (date: string): string => {
-  let newDate = new Date(date)
-  let result = newDate.toISOString().replace('T', ' ').split('.')[0]
+const dateFormat = (date: string | Date): string => {
+  let newDate
+  if(typeof date !== 'string') {
+    newDate = date
+  }else {
+    newDate = new Date(date)
+  }
+
+  const year = newDate.getFullYear()
+  const month = newDate.getMonth() + 1
+  const day = newDate.getDate()
+  const hours = newDate.getHours()
+  const minutes = newDate.getMinutes()
+  const seconds = newDate.getSeconds()
+  const result = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+
   return result
 }
 

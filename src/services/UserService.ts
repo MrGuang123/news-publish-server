@@ -1,5 +1,6 @@
 import { UserInterface, UserListQueryInterface, UserInfoQueryInterface, UserDataInterface, UserCreateParams } from "@interfaces/UserInterface"
 import UserDao from '@dao/UserDao'
+import dateFormat from '@utils/dateFormat'
 class UserService implements UserInterface {
   public userDao: UserDao
   constructor() {
@@ -29,27 +30,47 @@ class UserService implements UserInterface {
   }
 
   // 创建用户
-  createUser(params: UserCreateParams) {
+  async createUser(params: UserCreateParams) {
     const mustParam = ['userName', 'password', 'telephone', 'roleIds']
     const paramEnough = mustParam.every(key => params[key] !== 'undefined')
 
     if (!paramEnough) {
       return 'ErrorInfo:400:创建用户参数不足'
-    } else {
-      return this.userDao.createUser(params)
+    }
+
+    try {
+      const userInfo = await this.userDao.createUser(params)
+      const result = await this.userDao.getUserInfo(userInfo.id)
+      return result
+    }catch (e) {
+      return 'ErrorInfo:400:创建用户失败'
     }
   }
 
   // 更新用户信息
-  updateUser(params: UserCreateParams) {
+  async updateUser(params: UserCreateParams) {
     const mustParam = ['userName', 'password', 'telephone', 'roleIds']
     const paramEnough = mustParam.every(key => params[key] !== 'undefined')
 
     if (!paramEnough) {
       return 'ErrorInfo:400:更新用户参数不足'
-    } else {
-      return this.userDao.updateUser(params)
     }
+
+    params.id = Number(params.id)
+
+    try {
+      const userInfo = await this.userDao.getUserInfo(params.id)
+
+      if(userInfo) {
+        await this.userDao.updateUser(params)
+        return '修改成功'
+      }else {
+        return '用户不存在'
+      }
+    }catch (e) {
+      return '修改失败'
+    }
+
   }
 
   // 删除用户

@@ -52,15 +52,9 @@ User.init({
   },
   createdAt: {
     type: DataTypes.DATE,
-    get() {
-      return dateFormat(this.getDataValue('createdAt'))
-    }
   },
   updatedAt: {
     type: DataTypes.DATE,
-    get() {
-      return dateFormat(this.getDataValue('updatedAt'))
-    }
   },
 }, {
   tableName: 'user',
