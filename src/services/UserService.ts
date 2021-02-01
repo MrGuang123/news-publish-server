@@ -1,4 +1,4 @@
-import { UserInterface, UserListQueryInterface, UserInfoQueryInterface, UserDataInterface, UserCreateParams } from "@interfaces/UserInterface"
+import { UserInterface, UserListQueryInterface, UserInfoQueryInterface, UserCreateParams } from "@interfaces/UserInterface"
 import UserDao from '@dao/UserDao'
 import dateFormat from '@utils/dateFormat'
 class UserService implements UserInterface {
@@ -63,12 +63,12 @@ class UserService implements UserInterface {
 
       if(userInfo) {
         await this.userDao.updateUser(params)
-        return '修改成功'
+        return '修改用户成功'
       }else {
         return '用户不存在'
       }
     }catch (e) {
-      return '修改失败'
+      return '修改用户失败'
     }
 
   }
