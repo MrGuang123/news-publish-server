@@ -1,4 +1,4 @@
-import { LabelDataInterface, LabelInterface, LabelListQueryInterface, LabelInfoQueryInterface, CommonCreateInterface } from '@interfaces/LabelInterface'
+import { LabelInterface, LabelListQueryInterface, LabelInfoQueryInterface, CommonCreateInterface } from '@interfaces/LabelInterface'
 import { GET, POST, PUT, DELETE, route} from 'awilix-koa'
 import { RouterContext } from '@koa/router'
 
