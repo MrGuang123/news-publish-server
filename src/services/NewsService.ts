@@ -31,7 +31,7 @@ class NewsService implements NewsInterface {
 
   // 创建新闻
   async createNews(params: CommonCreateInterface) {
-    const mustParam = ['newsTitle', 'creatorId', 'areaId', 'content', 'labelIds', 'isPublished']
+    const mustParam = ['newsTitle', 'summary', 'creatorId', 'areaId', 'content', 'labelIds', 'isPublished']
     const paramEnough = mustParam.every(key => params[key] !== 'undefined')
 
     if (!paramEnough) {
@@ -50,7 +50,7 @@ class NewsService implements NewsInterface {
 
   // 修改新闻
   async updateNews(params: CommonCreateInterface) {
-    const mustParam = ['newsTitle', 'creatorId', 'areaId', 'content', 'labelIds', 'isPublished']
+    const mustParam = ['newsTitle', 'summary', 'creatorId', 'areaId', 'content', 'labelIds', 'isPublished']
     const paramEnough = mustParam.every(key => params[key] !== 'undefined')
 
     if (!paramEnough) {

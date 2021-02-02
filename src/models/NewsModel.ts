@@ -5,6 +5,7 @@ import { NewsDataInterface } from '@interfaces/NewsInterface'
 class News extends Model implements NewsDataInterface {
   id: number
   newsTitle: string
+  summary: string
   creatorId: number
   areaId: number
   content: string
@@ -22,6 +23,10 @@ News.init({
     primaryKey: true
   },
   newsTitle: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  summary: {
     type: DataTypes.STRING,
     allowNull: false
   },

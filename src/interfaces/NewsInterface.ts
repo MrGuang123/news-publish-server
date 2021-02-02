@@ -3,6 +3,7 @@ export interface NewsDataInterface {
   toJSON(): any
   id: number
   newsTitle: string
+  summary: string
   creatorId: number
   areaId: number
   content: string
