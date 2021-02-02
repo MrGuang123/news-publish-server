@@ -13,7 +13,7 @@ class NewsService implements NewsInterface {
       pageIndex: 1
     }, params)
 
-    return this.newsDao.getNewsList(params)
+    return this.newsDao.getNewsList(param)
   }
 
   // 获取新闻详情

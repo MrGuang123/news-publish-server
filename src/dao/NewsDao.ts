@@ -12,7 +12,7 @@ class NewsDao {
         exclude: ['isDelete']
       },
       limit: params.pageSize,
-      offset: params.pageSize * (params.pageSize - 1)
+      offset: params.pageSize * (params.pageIndex - 1)
     })
   }
 
