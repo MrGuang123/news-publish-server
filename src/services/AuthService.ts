@@ -21,6 +21,10 @@ class AuthService implements AuthControllerInterface {
 
     // 从数据库读取用户信息
     let user = await this.userDao.getUserInfo(params.userName)
+    // 如果没有查询到用户，则用户不存在
+    if(!user) {
+      return 'ErrorInfo:400:用户不存在'
+    }
     // 如果密码不符合返回权限错误
     if (user.password !== params.password) {
       return 'ErrorInfo:401:密码验证错误'

@@ -11,6 +11,8 @@ class UserDao {
   getUserList(params: UserListQueryInterface) {
 
     return UserModel.findAll({
+      // 取消sequelize包装，提高效率
+      raw: true,
       where: {
         isDelete: 0
       },
