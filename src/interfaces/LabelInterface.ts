@@ -10,9 +10,9 @@ export interface LabelDataInterface {
 }
 
 export interface LabelListQueryInterface {
-  type?: number
-  pageIndex?:number
-  pageSize?: number
+  labelName?: string
+  pageIndex: number
+  pageSize: number
 }
 export interface LabelInfoQueryInterface {
   id: number

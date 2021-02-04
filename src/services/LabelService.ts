@@ -7,6 +7,9 @@ class LabelService implements LabelInterface {
     this.labelDao = new LabelDao()
   }
   async getLabelList(params: LabelListQueryInterface) {
+    params.pageSize = Number(params.pageSize)
+    params.pageIndex = Number(params.pageIndex)
+
     const param = Object.assign({
       pageSize: 10,
       pageIndex: 1

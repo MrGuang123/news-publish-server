@@ -8,7 +8,7 @@ export interface UserInterface {
 }
 
 export interface UserListQueryInterface {
-  type: number
+  userName?: string
   pageIndex?: number
   pageSize?: number
 }

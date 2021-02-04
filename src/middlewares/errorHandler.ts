@@ -18,7 +18,8 @@ class ErrorHandler {
         }
 
         ctx.logger.error(`状态码：${code} - ${statusChar} - 消息：${err.message}`)
-        ctx.status = code
+        // ctx.status = code
+        ctx.status = 200
         ctx.body = {
           code: code,
           msg: `${statusChar} - ${err.message}`
@@ -33,9 +34,12 @@ class ErrorHandler {
         const statusChar = StatusConstance[ctx.status] || 'UNKNOWN'
 
         ctx.logger.error(`状态码：${ctx.status} - ${statusChar} - 消息：${ctx.request.url}`)
-        ctx.status = ctx.status
+        // ctx.status = ctx.status
+        // 为了正常返回前端请求，前端通过code来判断当前错误信息
+        const code = ctx.status
+        ctx.status = 200
         ctx.body = {
-          code: ctx.status,
+          code: code,
           msg: `${statusChar} - ${ctx.request.url}`
         }
       }

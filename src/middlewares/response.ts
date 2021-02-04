@@ -18,10 +18,20 @@ const responseFormat = (ctx: Context) => {
     ctx.status = 200
   }
 
-  ctx.body = ctx.body ? {
-    ...commonResponse,
-    [key]: ctx.body
-  } : commonResponse
+  // ctx.body = ctx.body ? {
+  //   ...commonResponse,
+  //   [key]: ctx.body
+  // } : commonResponse
+  if(ctx.body && ctx.body.code >= 300) {
+    ctx.body = Object.assign(commonResponse, ctx.body)
+  }else if (ctx.body) {
+    ctx.body = {
+      ...commonResponse,
+      [key]: ctx.body
+    }
+  }else {
+    ctx.body = commonResponse
+  }
 }
 
 const responseUrlFiter = (reg: string) => {
