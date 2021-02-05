@@ -7,6 +7,7 @@ export interface NewsDataInterface {
   creatorId: number
   areaId: number
   content: string
+  readCount: number
   labelIds?: string
   isDelete: boolean
   isPublished: boolean

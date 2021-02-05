@@ -9,6 +9,7 @@ class News extends Model implements NewsDataInterface {
   creatorId: number
   areaId: number
   content: string
+  readCount: number
   labelIds?: string
   isDelete: boolean
   isPublished: boolean
@@ -37,6 +38,10 @@ News.init({
   content: {
     type: DataTypes.STRING(1000),
     allowNull: false
+  },
+  readCount: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
   },
   labelIds: {
     type: DataTypes.STRING,
