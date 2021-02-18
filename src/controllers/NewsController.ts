@@ -1,6 +1,8 @@
 import { NewsInterface, NewsListQueryInterface, NewsInfoQueryInterface, CommonCreateInterface } from '@interfaces/NewsInterface'
-import { GET, POST, PUT, DELETE, route } from 'awilix-koa'
+import { GET, POST, PUT, DELETE, route, before } from 'awilix-koa'
 import { RouterContext } from '@koa/router'
+import { DefaultContext } from 'koa'
+import multiparty from 'koa2-multiparty'
 
 interface NewsServiceInterface {
   newsService: NewsInterface
@@ -63,6 +65,26 @@ class NewsController {
     const result = await this.newsService.deleteNews(params)
 
     ctx.body = result
+  }
+
+  // 上传新闻图片
+  @route('/upload-image')
+  @POST()
+  @before([multiparty()])
+  async uploadImage(ctx: DefaultContext, next: () => Promise<any>) {
+    const params = ctx.request.body
+    console.log(ctx.req.files)
+
+    ctx.body = {
+      errno: 0,
+      data: [
+        {
+          url: '',
+          alt: '',
+          href: ''
+        }
+      ]
+    }
   }
 
 }

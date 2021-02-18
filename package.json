@@ -23,6 +23,7 @@
     "koa-bodyparser": "^4.3.0",
     "koa-helmet": "^6.0.0",
     "koa-static": "^5.0.0",
+    "koa2-multiparty": "^1.0.1",
     "log4js": "^6.3.0",
     "mariadb": "^2.5.2",
     "module-alias": "^2.2.2",

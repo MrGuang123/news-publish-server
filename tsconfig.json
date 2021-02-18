@@ -30,6 +30,11 @@
       "@dao/*": [
         "src/dao/*"
       ],
+      // 需要配置可以让ts找到你的声明文件
+      "*": [
+        "node_modules/types/*",
+        "src/types/*"
+      ]
     },
     // 允许使用装饰器
     "experimentalDecorators": true,

@@ -25,9 +25,11 @@ const responseFormat = (ctx: Context) => {
   if(ctx.body && ctx.body.code >= 300) {
     ctx.body = Object.assign(commonResponse, ctx.body)
   }else if (ctx.body) {
-    ctx.body = {
-      ...commonResponse,
-      [key]: ctx.body
+    if(ctx.body.errno === undefined) {
+      ctx.body = {
+        ...commonResponse,
+        [key]: ctx.body
+      }
     }
   }else {
     ctx.body = commonResponse
