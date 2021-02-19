@@ -36,7 +36,8 @@ News.init({
     allowNull: false
   },
   content: {
-    type: DataTypes.STRING(1000),
+    // 数据库设置类型为LONGTEXT
+    type: DataTypes.TEXT,
     allowNull: false
   },
   readCount: {

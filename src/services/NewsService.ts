@@ -8,6 +8,9 @@ class NewsService implements NewsInterface {
   }
   // 获取新闻列表
   getNewsList(params: NewsListQueryInterface) {
+    params.pageSize = Number(params.pageSize)
+    params.pageIndex = Number(params.pageIndex)
+
     const param = Object.assign({
       pageSize: 10,
       pageIndex: 1

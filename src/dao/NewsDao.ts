@@ -1,13 +1,34 @@
 import NewsModel from '@models/NewsModel'
+import UserModel from '@models/UserModel'
 import { NewsDataInterface, NewsListQueryInterface, NewsInfoQueryInterface, CommonCreateInterface } from '@interfaces/NewsInterface'
+import { Op } from 'sequelize'
 
+NewsModel.belongsTo(UserModel, {
+  foreignKey: 'creatorId',
+  targetKey: 'id',
+  as: 'user'
+})
 class NewsDao {
   // 获取新闻列表
   getNewsList(params: NewsListQueryInterface) {
+    let searchOption = {
+      isDelete: 0
+    }
+    if(params.newsTitle) {
+      searchOption = Object.assign(searchOption, {
+        newsTitle: {
+          [Op.like]: `%${params.newsTitle}%`
+        }
+      })
+    }
+
     return NewsModel.findAll({
-      where: {
-        isDelete: 0
-      },
+      where: searchOption,
+      include: [{
+        model: UserModel,
+        as: 'user',
+        attributes: [['userName', 'creatorName']]
+      }],
       attributes: {
         exclude: ['isDelete']
       },

@@ -2,6 +2,7 @@ import { NewsInterface, NewsListQueryInterface, NewsInfoQueryInterface, CommonCr
 import { GET, POST, PUT, DELETE, route, before } from 'awilix-koa'
 import { RouterContext } from '@koa/router'
 import { DefaultContext } from 'koa'
+import config from '../config'
 import multiparty from 'koa2-multiparty'
 
 interface NewsServiceInterface {
@@ -70,20 +71,25 @@ class NewsController {
   // 上传新闻图片
   @route('/upload-image')
   @POST()
-  @before([multiparty()])
+  @before([multiparty({uploadDir: `${config.staticDir}/images/`})])
   async uploadImage(ctx: DefaultContext, next: () => Promise<any>) {
-    const params = ctx.request.body
     console.log(ctx.req.files)
-
+    const { imageFile } = ctx.req.files
+    const imageDirSplit = imageFile.path.split('/')
+    const imageCurrentName = imageDirSplit[imageDirSplit.length - 1]
+    // ctx.body = {
+    //   errno: 0,
+    //   data: [
+    //     {
+    //       url: `http://${config.host}:${config.port}/images/${imageCurrentName}`,
+    //       alt: imageFile.name,
+    //       href: ''
+    //     }
+    //   ]
+    // }
     ctx.body = {
       errno: 0,
-      data: [
-        {
-          url: '',
-          alt: '',
-          href: ''
-        }
-      ]
+      data: [`http://${config.host}:${config.port}/images/${imageCurrentName}`]
     }
   }
 

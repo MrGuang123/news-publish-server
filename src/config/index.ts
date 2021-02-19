@@ -18,9 +18,9 @@ interface dbConfigInterface {
 // 需要下载ts的node类型包：@types/node来识别node相关api
 const useConfig = process.env.NODE_ENV === 'product' ? prodConfig : devConfig
 const config = {
-  staticDir: path.join(__dirname, '../', 'assets'),
+  staticDir: path.join(__dirname, '../../', 'public'),
   // 不需要权限校验的路由
-  authBlackList: ['^/api/auth/login'],
+  authBlackList: ['^/api/auth/login', '^/images'],
   dbConfig: dbConfig || {} as dbConfigInterface
 }
 

@@ -18,6 +18,7 @@ export interface NewsDataInterface {
 export interface NewsListQueryInterface {
   pageSize: number
   pageIndex: number
+  newsTitle?: string
 }
 
 export interface CommonCreateInterface {
