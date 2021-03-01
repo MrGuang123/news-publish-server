@@ -9,6 +9,8 @@ class UserService implements UserInterface {
 
   // 获取全部用户列表
   getUserList(params: UserListQueryInterface) {
+    params.pageSize = Number(params.pageSize)
+    params.pageIndex = Number(params.pageIndex)
     const param = Object.assign({
       pageIndex: 1,
       pageSize: 10
