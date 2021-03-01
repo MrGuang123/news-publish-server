@@ -1,10 +1,13 @@
 import { NewsInterface, NewsListQueryInterface, NewsInfoQueryInterface, CommonCreateInterface } from '@interfaces/NewsInterface'
 import NewsDao from '@dao/NewsDao'
+import UserDao from '@dao/UserDao'
 
 class NewsService implements NewsInterface {
   newsDao
+  userDao
   constructor() {
     this.newsDao = new NewsDao()
+    this.userDao = new UserDao()
   }
   // 获取新闻列表
   getNewsList(params: NewsListQueryInterface) {
@@ -93,6 +96,20 @@ class NewsService implements NewsInterface {
       }
     }catch(e) {
       return '删除新闻失败'
+    }
+  }
+
+  // 获取首页展示模块数据
+  async getShowData() {
+    try {
+      const allRequest = [this.newsDao.getTodayPublished(), this.userDao.getAuthorNum(), this.newsDao.getAllNewsNum(), this.newsDao.getAllReadCount()]
+      const [todayNews, authorsNum, allNewsNum, allReadCount] = await Promise.all(allRequest)
+console.log(allNewsNum)
+      return {
+        todayNews, authorsNum, allNewsNum, allReadCount
+      }
+    }catch(e) {
+      return '获取数据失败'
     }
   }
 }

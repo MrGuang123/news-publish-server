@@ -93,6 +93,15 @@ class NewsController {
     }
   }
 
+  // 获取首页展示模块数据
+  @route('/show-data')
+  @GET()
+  async getShowData(ctx: DefaultContext, next: () => Promise<any>) {
+    const result = await this.newsService.getShowData()
+
+    ctx.body = result
+  }
+
 }
 
 export default NewsController

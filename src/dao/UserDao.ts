@@ -71,6 +71,17 @@ class UserDao {
       }
     })
   }
+
+  // 获取作者个数
+  getAuthorNum(): Promise<any> {
+    const params = {
+      isDelete: 0,
+      roleIds: '1'
+    }
+    return UserModel.count({
+      where: params
+    })
+  }
 }
 
 export default UserDao

@@ -1,4 +1,4 @@
-const dateFormat = (date: string | Date): string => {
+export const dateFormat = (date: string | Date): string => {
   let newDate
   if(typeof date !== 'string') {
     newDate = date
@@ -17,4 +17,9 @@ const dateFormat = (date: string | Date): string => {
   return result
 }
 
-export default dateFormat
+export function getTodayRange() {
+  const start = new Date(new Date(new Date().toLocaleDateString()).getTime())
+  const end = new Date(new Date(new Date().toLocaleDateString()).getTime() +24 * 60 * 60 * 1000 -1)
+
+  return [start, end]
+}
