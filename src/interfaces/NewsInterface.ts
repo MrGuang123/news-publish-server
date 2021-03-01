@@ -36,4 +36,6 @@ export interface NewsInterface {
   updateNews(params: CommonCreateInterface): Promise<any> | any
   deleteNews(params: NewsInfoQueryInterface): Promise<any>
   getShowData(): Promise<any>
+  getNewestNews(): Promise<any>
+  getHotNews(): Promise<any>
 }

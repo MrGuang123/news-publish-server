@@ -1,6 +1,7 @@
 import UserModel from '@models/UserModel'
 import { UserListQueryInterface, UserCreateParams, UserDataInterface } from "@interfaces/UserInterface"
 import { AuthUser } from '@interfaces/AuthInterface'
+import { Op } from 'sequelize'
 
 type updateData = {
   [key in keyof AuthUser]?: any
@@ -76,7 +77,14 @@ class UserDao {
   getAuthorNum(): Promise<any> {
     const params = {
       isDelete: 0,
-      roleIds: '1'
+      [Op.or]: [
+        {
+          roleIds: '0'
+        },
+        {
+          roleIds: '1'
+        }
+      ]
     }
     return UserModel.count({
       where: params

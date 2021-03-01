@@ -104,13 +104,23 @@ class NewsService implements NewsInterface {
     try {
       const allRequest = [this.newsDao.getTodayPublished(), this.userDao.getAuthorNum(), this.newsDao.getAllNewsNum(), this.newsDao.getAllReadCount()]
       const [todayNews, authorsNum, allNewsNum, allReadCount] = await Promise.all(allRequest)
-console.log(allNewsNum)
+
       return {
         todayNews, authorsNum, allNewsNum, allReadCount
       }
     }catch(e) {
       return '获取数据失败'
     }
+  }
+
+  // 获取最新新闻
+  async getNewestNews() {
+    return this.newsDao.getOrderedNews('updatedAt')
+  }
+
+  // 获取热度最高新闻
+  async getHotNews() {
+    return this.newsDao.getOrderedNews('readCount')
   }
 }
 

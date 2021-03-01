@@ -102,6 +102,22 @@ class NewsController {
     ctx.body = result
   }
 
+  @route('/newest-news')
+  @GET()
+  async getNewestNews(ctx: RouterContext, next: () => Promise<any>) {
+    const result = await this.newsService.getNewestNews()
+
+    ctx.body = result
+  }
+
+  @route('/hot-news')
+  @GET()
+  async getHotNews(ctx: RouterContext, next: () => Promise<any>) {
+    const result = await this.newsService.getHotNews()
+
+    ctx.body = result
+  }
+
 }
 
 export default NewsController

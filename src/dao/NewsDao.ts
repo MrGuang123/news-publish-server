@@ -125,6 +125,32 @@ class NewsDao {
       where: params
     })
   }
+
+  // 获取排序后的新闻列表
+  // 获取最新新闻参数为'updatedAt'，获取热度最高新闻参数为'readCount'
+  // DESC是按照从高到低进行排序
+  getOrderedNews(action: string) {
+    let orderParam: [string, string][]
+    if(action === 'updatedAt') {
+      orderParam = [
+        ['updatedAt', 'DESC']
+      ]
+    }else {
+      orderParam = [
+        ['readCount', 'DESC'],
+        ['updatedAt', 'DESC']
+      ]
+    }
+    return NewsModel.findAll({
+      where: {
+        isDelete: 0,
+        isPublished: true
+      },
+      attributes: ['id', 'newsTitle', 'summary', 'content', 'updatedAt', 'readCount'],
+      order: orderParam,
+      limit: 5
+    })
+  }
 }
 
 export default NewsDao
